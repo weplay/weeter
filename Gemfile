@@ -8,4 +8,5 @@ gem 'twitter-stream', :require => 'twitter/json_stream'
 
 group :development do
   gem "rspec", :require => "spec"
+  gem "rake"
 end
