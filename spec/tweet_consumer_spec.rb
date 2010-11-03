@@ -16,10 +16,8 @@ describe Weeter::TweetConsumer do
   end
   
   it "should connect to a Twitter JSON stream" do
-    Twitter::JSONStream.should_receive(:connect).with(
-      :auth => "joe:schmoe",
-      :content => "follow=#{@ids.join(',')}",
-      :method => 'POST')
+    Twitter::JSONStream.should_receive(:connect).
+      with(:auth => "joe:schmoe", :content => "follow=#{@ids.join(',')}", :method => 'POST')
   end
   
   it "should publish new tweet" do

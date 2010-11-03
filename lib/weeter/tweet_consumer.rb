@@ -1,11 +1,6 @@
 require 'em-http'
 require 'twitter/json_stream'
 
-TWITTER_USERNAME = ''
-TWITTER_PASSWORD = ''
-NEW_TWEET_URL    = ''
-TWITTER_USER_URL = ''
-
 module Weeter
   class TweetConsumer
 
