@@ -26,9 +26,6 @@ module Weeter
             :text => parsed_item['text'],
             :twitter_user_id => parsed_item['user']['id_str']
           }
-puts "Publishing #{parsed_item['text']}"
-        else
-puts "Ignoring #{parsed_item['text']}"
         end
       end
 
