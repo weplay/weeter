@@ -19,11 +19,17 @@ module Weeter
 
       @stream.each_item do |item|
         parsed_item = JSON.parse(item)
-        EM::HttpRequest.new(@publish_url).post :body => {
-          :id => parsed_item['id_str'],
-          :text => parsed_item['text'],
-          :twitter_user_id => parsed_item['user']['id_str']
-        }
+
+        if publish?(parsed_item)
+          EM::HttpRequest.new(@publish_url).post :body => {
+            :id => parsed_item['id_str'],
+            :text => parsed_item['text'],
+            :twitter_user_id => parsed_item['user']['id_str']
+          }
+puts "Publishing #{parsed_item['text']}"
+        else
+puts "Ignoring #{parsed_item['text']}"
+        end
       end
 
       @stream.on_error {|msg| puts("ERROR: #{msg.inspect}") }
@@ -37,5 +43,18 @@ module Weeter
       connect(ids)
     end
     
+  protected
+  
+    def publish?(tweet)
+      !retweeted?(tweet) && !reply?(tweet)
+    end
+    
+    def retweeted?(tweet)
+      tweet['retweeted_status'] || tweet['text'] =~ /^RT @/i
+    end
+    
+    def reply?(tweet)
+      tweet['in_reply_to_user_id_str'] || tweet['text'] =~ /^@/
+    end
   end
 end
