@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Weeter::Server do
   before(:each) do
     @new_ids = [1,2,3]
-    @streamer = mock('Streamer', :reconnect => nil)
+    @tweet_consumer = mock('TweetConsumer', :reconnect => nil)
     @tweet_server = Weeter::Server.new(nil)
     @tweet_server.instance_variable_set('@http_post_content', @new_ids.to_json)
-    @tweet_server.streamer = @streamer
+    @tweet_server.tweet_consumer = @tweet_consumer
     @response = mock('DelegatedHttpResponse', :send_response => nil)
     EM::DelegatedHttpResponse.stub!(:new).and_return(@response)
   end
@@ -16,7 +16,7 @@ describe Weeter::Server do
   end
   
   it "should process http request" do
-    @streamer.should_receive(:reconnect).with(@new_ids)
+    @tweet_consumer.should_receive(:reconnect).with(@new_ids)
   end
   
   it "should send response" do

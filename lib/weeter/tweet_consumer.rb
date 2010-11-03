@@ -14,10 +14,6 @@ module Weeter
       @password = options[:password]
       @publish_url = options[:publish_url]
     end
-    
-    def self.connect(ids)
-      new.tap {|streamer| streamer.connect(ids) }
-    end
 
     def connect(ids)
       @stream = Twitter::JSONStream.connect(

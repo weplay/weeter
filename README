@@ -7,7 +7,7 @@ Getting set up
 Running weeter
 ==============
 
-  $ bundle exec rake weeter:run
+  $ bundle exec ./bin/weeter -c weeter.conf
 
 Running specs
 =============
