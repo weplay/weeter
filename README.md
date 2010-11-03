@@ -11,6 +11,7 @@ Make a copy of the weeter.conf.example file named weeter.conf. Modify its values
 
   $ bundle exec ./bin/weeter -c weeter.conf
 
+
 Running specs
 =============
 
