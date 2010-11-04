@@ -9,7 +9,11 @@ Running weeter
 
 Make a copy of the weeter.conf.example file named weeter.conf. Modify its values for your environment. Then:
 
-  $ bundle exec ./bin/weeter -c weeter.conf
+  $ bin/weeter_control start
+
+For other commands and options, run:
+
+  $ bin/weeter_control --help
 
 
 Running specs
@@ -21,3 +25,7 @@ Running specs
 To Do
 =====
 
+- Support OAuth instead of (or in addition to) basic authentication
+- Maintain log file
+- Error reporting
+- Don't hard-code tweet filtering strategy (re-tweets, replies, etc.)

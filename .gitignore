@@ -1,3 +1,4 @@
 .rvmrc
 .bundle
 weeter.conf
+weeter.pid

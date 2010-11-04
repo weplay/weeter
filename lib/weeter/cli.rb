@@ -4,7 +4,7 @@ module Weeter
   class Cli
 
     def initialize(args)
-      @configuration_file = "weeter.conf"
+      @configuration_file = File.join(File.dirname(__FILE__), '..', '..', 'weeter.conf')
       args.options do |opts|
         opts.banner = "Usage: #{$0} [options]"
         opts.on("-c", "--configuration=filename", String,
