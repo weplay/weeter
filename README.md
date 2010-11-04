@@ -3,10 +3,6 @@ Getting set up
 
     $ bundle install
 
-
-Configuration
-==============
-
 Make a copy of the weeter.conf.example file named weeter.conf. Modify its values for your environment. Configurable attributes include:
 
 * _basic_auth_: Twitter account credentials for use in connecting to the streaming API. `{:username => "david", :password => "secr3tp2ssw0rd"}`
@@ -31,7 +27,7 @@ Running weeter
 
     $ bin/weeter_control start
 
-For other commands and options, run:
+This starts weeter as a daemon. For other commands and options, run:
 
     $ bin/weeter_control --help
 

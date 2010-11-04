@@ -12,8 +12,6 @@ Weeter.configure do |conf|
   #              :access_key => 'accesskey',
   #              :access_secret => 'access_secret'}
 
-  # conf.listening_port = 8080 # defaults to 7337
-
   conf.subscriptions_url = 'http://www.mysite.com/twitter_subscriptions.json'
   conf.publish_url       = 'http://www.mysite.com/tweets/create'
   conf.delete_url        = 'http://www.mysite.com/tweets/destroy'
