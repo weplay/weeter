@@ -11,10 +11,12 @@ Make a copy of the weeter.conf.example file named weeter.conf. Modify its values
 
 * _basic_auth_: Twitter account credentials for use in connecting to the streaming API. `{:username => "david", :password => "secr3tp2ssw0rd"}`
 * _oauth_: OAuth credentials for use in connecting to the streaming API.
-    {:consumer_key => 'consumerkey',
-     :consumer_secret => 'consumersecret',
-     :access_key => 'accesskey',
+
+    {:consumer_key => 'consumerkey',  
+     :consumer_secret => 'consumersecret',  
+     :access_key => 'accesskey',  
      :access_secret => 'access_secret'}
+
 * _subscriptions_url_: The URL at which to find JSON describing the Twitter users to follow. Example content:
     `[{"twitter_user_id":"19466709"},{"twitter_user_id":"759251"}]`
 * _publish_url_: The URL to which new tweets should be posted. Example POST body:
