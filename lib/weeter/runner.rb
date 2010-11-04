@@ -29,11 +29,20 @@ module Weeter
 
     def tweet_consumer
       @tweet_consumer ||= Weeter::TweetConsumer.new(
-        :username => @config.username,
-        :password => @config.password,
+        :authentication_options => authentication_options,
         :publish_url => @config.publish_url,
         :delete_url => @config.delete_url
       )
+    end
+
+    def authentication_options
+      if @config.oauth
+        {:oauth => @config.oauth}
+      else
+        username = @config.basic_auth[:username]
+        password = @config.basic_auth[:password]
+        {:auth => "#{username}:#{password}"}
+      end
     end
 
     def get_initial_ids
