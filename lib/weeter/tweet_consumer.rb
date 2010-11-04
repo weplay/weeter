@@ -8,6 +8,7 @@ module Weeter
       @username = options[:username]
       @password = options[:password]
       @publish_url = options[:publish_url]
+      @delete_url = options[:delete_url]
     end
 
     def connect(ids)
@@ -18,13 +19,18 @@ module Weeter
       )
 
       @stream.each_item do |item|
-        parsed_item = JSON.parse(item)
-
-        if publish?(parsed_item)
+        tweet_item = TweetItem.new(JSON.parse(item))
+        
+        if tweet_item.deletion?
+          EM::HttpRequest.new(@delete_url).delete :body => {
+            :id => tweet_item['delete']['status']['id'].to_s,
+            :twitter_user_id => tweet_item['delete']['status']['user_id'].to_s
+          }
+        elsif tweet_item.publishable?
           EM::HttpRequest.new(@publish_url).post :body => {
-            :id => parsed_item['id_str'],
-            :text => parsed_item['text'],
-            :twitter_user_id => parsed_item['user']['id_str']
+            :id => tweet_item['id_str'],
+            :text => tweet_item['text'],
+            :twitter_user_id => tweet_item['user']['id_str']
           }
         end
       end
@@ -39,19 +45,6 @@ module Weeter
       puts "Reconnecting with ids: #{ids.inspect}"
       connect(ids)
     end
-    
-  protected
-  
-    def publish?(tweet)
-      !retweeted?(tweet) && !reply?(tweet)
-    end
-    
-    def retweeted?(tweet)
-      tweet['retweeted_status'] || tweet['text'] =~ /^RT @/i
-    end
-    
-    def reply?(tweet)
-      tweet['in_reply_to_user_id_str'] || tweet['text'] =~ /^@/
-    end
+
   end
 end

@@ -9,7 +9,7 @@ module Weeter
   class Configuration
     include Singleton
     
-    attr_accessor :publish_url, :subscriptions_url, :listening_port, :username, :password
+    attr_accessor :publish_url, :delete_url, :subscriptions_url, :listening_port, :username, :password
     
     def listening_port
       @listening_port || 7337
