@@ -1,3 +1,5 @@
+Weeter accepts a set of Twitter users to follow, and makes a POST to your app with each new tweet (or tweet deletion).
+
 Getting set up
 ==============
 
@@ -13,7 +15,7 @@ Make a copy of the weeter.conf.example file named weeter.conf. Modify its values
      :access_key => 'accesskey',  
      :access_secret => 'access_secret'}
 
-* _subscriptions_url_: The URL at which to find JSON describing the Twitter users to follow. Example content:
+* _subscriptions_url_: The URL at which to find JSON describing the Twitter users to follow (maximum 5,000 at the default API access level). Example content:
     `[{"twitter_user_id":"19466709"},{"twitter_user_id":"759251"}]`
 * _publish_url_: The URL to which new tweets should be posted. Example POST body:
     `id=1111&twitter_user_id=19466709&text=Wassup`
@@ -41,4 +43,5 @@ Running specs
 To Do
 =====
 - Error reporting
+- Gemify
 - Don't hard-code tweet filtering strategy (re-tweets, replies, etc.)
