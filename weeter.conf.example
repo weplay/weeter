@@ -1,7 +1,9 @@
 Weeter.configure do |conf|
   conf.username = 'david'
   conf.password = 'secr3tp2ssw0rd'
-  # conf.listening_port = 8080 # defaults to 7337
   conf.subscriptions_url = 'http://www.mysite.com/twitter_subscriptions.json'
-  conf.publish_url = 'http://www.mysite.com/tweet_receiver'
+  conf.publish_url = 'http://www.mysite.com/tweets/create'
+  conf.delete_url = 'http://www.mysite.com/tweets/destroy'
+  conf.listening_port = 8080  # default: 7337
+  conf.log_path = '/tmp/weeter.log'  # default: log/weeter.log
 end

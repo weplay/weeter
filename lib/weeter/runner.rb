@@ -5,6 +5,7 @@ module Weeter
 
     def initialize(config)
       @config = config
+      Weeter.logger.info("Starting weeter with configuration: #{@config.inspect}")
     end
 
     def start
@@ -17,7 +18,10 @@ module Weeter
           conn.tweet_consumer = tweet_consumer
         end
 
-        trap('TERM') { EM.stop if EM.reactor_running? }
+        trap('TERM') do
+          Weeter.logger.info("Stopping weeter")
+          EM.stop if EM.reactor_running?
+        end
       }
     end
 
@@ -27,7 +31,8 @@ module Weeter
       @tweet_consumer ||= Weeter::TweetConsumer.new(
         :username => @config.username,
         :password => @config.password,
-        :publish_url => @config.publish_url
+        :publish_url => @config.publish_url,
+        :delete_url => @config.delete_url
       )
     end
 
@@ -36,7 +41,11 @@ module Weeter
       EM.run {
         http = EM::HttpRequest.new(@config.subscriptions_url).get
         http.callback {
-          initial_ids = JSON.parse(http.response).map {|h| h['twitter_user_id'] } if http.response_header.status == 200
+          if http.response_header.status == 200
+            initial_ids = JSON.parse(http.response).map {|h| h['twitter_user_id'] }
+          else
+            Weeter.logger.error "Initial ID request failed with response code #{http.response_header.status}."
+          end
           EM.stop
         }
       }
