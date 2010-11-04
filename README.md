@@ -44,7 +44,5 @@ Running specs
 
 To Do
 =====
-
-- Support OAuth instead of (or in addition to) basic authentication
 - Error reporting
 - Don't hard-code tweet filtering strategy (re-tweets, replies, etc.)
