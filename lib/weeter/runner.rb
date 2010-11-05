@@ -9,57 +9,30 @@ module Weeter
     end
 
     def start
-      initial_ids = get_initial_ids
-
       EM.run {
-        tweet_consumer.connect(initial_ids)
+        client_app_proxy.get_initial_ids do |initial_ids|
+          tweet_consumer.connect(initial_ids)
 
-        EM.start_server('localhost', @config.listening_port, Weeter::Server) do |conn|
-          conn.tweet_consumer = tweet_consumer
-        end
+          EM.start_server('localhost', @config.listening_port, Weeter::Server) do |conn|
+            conn.tweet_consumer = tweet_consumer
+          end
 
-        trap('TERM') do
-          Weeter.logger.info("Stopping weeter")
-          EM.stop if EM.reactor_running?
+          trap('TERM') do
+            Weeter.logger.info("Stopping weeter")
+            EM.stop if EM.reactor_running?
+          end
         end
       }
     end
 
   protected
 
+    def client_app_proxy
+      @client_app_proxy ||= Weeter::ClientAppProxy.new(ClientAppConfiguration.instance)
+    end
+    
     def tweet_consumer
-      @tweet_consumer ||= Weeter::TweetConsumer.new(
-        :twitter_auth_options => authentication_options,
-        :publish_url => @config.publish_url,
-        :delete_url => @config.delete_url
-      )
+      @tweet_consumer ||= Weeter::TweetConsumer.new(TwitterConfiguration.instance, client_app_proxy)
     end
-
-    def authentication_options
-      if @config.twitter_oauth
-        {:oauth => @config.twitter_oauth}
-      else
-        username = @config.twitter_basic_auth[:username]
-        password = @config.twitter_basic_auth[:password]
-        {:auth => "#{username}:#{password}"}
-      end
-    end
-
-    def get_initial_ids
-      initial_ids = []
-      EM.run {
-        http = EM::HttpRequest.new(@config.subscriptions_url).get
-        http.callback {
-          if http.response_header.status == 200
-            initial_ids = JSON.parse(http.response).map {|h| h['twitter_user_id'] }
-          else
-            Weeter.logger.error "Initial ID request failed with response code #{http.response_header.status}."
-          end
-          EM.stop
-        }
-      }
-      initial_ids
-    end
-
   end
 end
