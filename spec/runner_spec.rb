@@ -12,14 +12,14 @@ describe Weeter::Runner do
       @http_request = mock(:http_request, :get => @http)
       EM::HttpRequest.stub!(:new => @http_request)
 
-      Weeter::Configuration.instance.oauth = nil
-      Weeter::Configuration.instance.basic_auth = nil
+      Weeter::Configuration.instance.twitter_oauth = nil
+      Weeter::Configuration.instance.twitter_basic_auth = nil
     end
 
     describe "initial ids" do
       it "should use the subscriptions url to get the initial ids" do
         Weeter.configure do |config|
-          config.oauth = {}
+          config.twitter_oauth = {}
           config.subscriptions_url = "http://www.site.com/ids"
         end
 
@@ -32,7 +32,7 @@ describe Weeter::Runner do
       
       it "should parse JSON in the response to get the IDS" do
         Weeter.configure do |config|
-          config.oauth = {}
+          config.twitter_oauth = {}
           config.subscriptions_url = "http://www.site.com/ids"
         end
         Weeter::TweetConsumer.stub!(:new).and_return(@consumer)
@@ -53,7 +53,7 @@ describe Weeter::Runner do
         oauth_params = {:consumer_key => 'consumer_key', :consumer_secret => 'consumer_secret',
                        :access_key => 'acces_key', :access_secret => 'access_secret'}
 
-        Weeter::Configuration.instance.oauth = oauth_params
+        Weeter::Configuration.instance.twitter_oauth = oauth_params
         runner = Weeter::Runner.new(Weeter::Configuration.instance)
 
         Weeter::TweetConsumer.should_receive(:new).with(hash_including(:authentication_options => {:oauth => oauth_params})).and_return(@consumer)
@@ -65,8 +65,8 @@ describe Weeter::Runner do
         oauth_params = {:consumer_key => 'consumer_key', :consumer_secret => 'consumer_secret',
                        :access_key => 'acces_key', :access_secret => 'access_secret'}
 
-        Weeter::Configuration.instance.oauth = oauth_params
-        Weeter::Configuration.instance.basic_auth = {:username => 'foo', :password => 'bar'}
+        Weeter::Configuration.instance.twitter_oauth = oauth_params
+        Weeter::Configuration.instance.twitter_basic_auth = {:username => 'foo', :password => 'bar'}
         runner = Weeter::Runner.new(Weeter::Configuration.instance)
 
         Weeter::TweetConsumer.should_receive(:new).with(hash_including(:authentication_options => {:oauth => oauth_params})).and_return(@consumer)
@@ -77,7 +77,7 @@ describe Weeter::Runner do
 
     describe 'when using basic auth' do
       it 'should use a tweet consumer created with basic_auth authentication_options' do
-        Weeter::Configuration.instance.basic_auth = {:username => 'foo', :password => 'bar'}
+        Weeter::Configuration.instance.twitter_basic_auth = {:username => 'foo', :password => 'bar'}
         runner = Weeter::Runner.new(Weeter::Configuration.instance)
 
         Weeter::TweetConsumer.should_receive(:new).with(hash_including(:authentication_options => {:auth => 'foo:bar'})).and_return(@consumer)

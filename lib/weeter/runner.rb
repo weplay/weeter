@@ -36,11 +36,11 @@ module Weeter
     end
 
     def authentication_options
-      if @config.oauth
-        {:oauth => @config.oauth}
+      if @config.twitter_oauth
+        {:oauth => @config.twitter_oauth}
       else
-        username = @config.basic_auth[:username]
-        password = @config.basic_auth[:password]
+        username = @config.twitter_basic_auth[:username]
+        password = @config.twitter_basic_auth[:password]
         {:auth => "#{username}:#{password}"}
       end
     end

@@ -4,10 +4,10 @@
 
 Weeter.configure do |conf|
   # For basic auth
-  # conf.basic_auth = {:username => 'david', :password => 'secr3tp2ssw0rd'}
+  # conf.twitter_basic_auth = {:username => 'david', :password => 'secr3tp2ssw0rd'}
 
   # Or, for oauth
-  # conf.oauth = {:consumer_key => 'consumerkey',
+  # conf.twitter_oauth = {:consumer_key => 'consumerkey',
   #              :consumer_secret => 'consumersecret',
   #              :access_key => 'accesskey',
   #              :access_secret => 'access_secret'}

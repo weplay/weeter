@@ -7,8 +7,8 @@ Getting set up
 
 Make a copy of the weeter.conf.example file named weeter.conf. Modify its values for your environment. Configurable attributes include:
 
-* _basic_auth_: Twitter account credentials for use in connecting to the streaming API. `{:username => "david", :password => "secr3tp2ssw0rd"}`
-* _oauth_: OAuth credentials for use in connecting to the streaming API.
+* _twitter_basic_auth_: Twitter account credentials for use in connecting to the streaming API. `{:username => "david", :password => "secr3tp2ssw0rd"}`
+* _twitter_oauth_: OAuth credentials for use in connecting to the streaming API.
 
     {:consumer_key => 'consumerkey',  
      :consumer_secret => 'consumersecret',  
