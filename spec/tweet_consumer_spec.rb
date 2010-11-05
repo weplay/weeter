@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Weeter::TweetConsumer do
   before(:each) do
     @ids = [1,2,3]
-    @consumer = Weeter::TweetConsumer.new(:authentication_options => {:auth => 'joe:schmoe'}, :publish_url => 'http://mysite.co', :delete_url => 'http://mysite.co/delete')
+    @consumer = Weeter::TweetConsumer.new(:twitter_auth_options => {:auth => 'joe:schmoe'}, :publish_url => 'http://mysite.co', :delete_url => 'http://mysite.co/delete')
     @mock_stream = mock('JSONStream', :each_item => nil, :on_error => nil, :on_max_reconnects => nil)
     Twitter::JSONStream.stub!(:connect).and_return(@mock_stream)
     @mock_request = mock('HttpRequest', :post => nil)
@@ -17,7 +17,7 @@ describe Weeter::TweetConsumer do
       oauth_params = {:consumer_key => 'consumer_key', :consumer_secret => 'consumer_secret',
                      :access_key => 'acces_key', :access_secret => 'access_secret'}
 
-      consumer = Weeter::TweetConsumer.new(:authentication_options => {:oauth => oauth_params})
+      consumer = Weeter::TweetConsumer.new(:twitter_auth_options => {:oauth => oauth_params})
 
       Twitter::JSONStream.should_receive(:connect).with(hash_including(:oauth => oauth_params))
 
@@ -25,7 +25,7 @@ describe Weeter::TweetConsumer do
     end
 
     it 'should use basic_auth when basic_auth is the provided authentication' do
-      consumer = Weeter::TweetConsumer.new(:authentication_options => {:auth => 'username:password'})
+      consumer = Weeter::TweetConsumer.new(:twitter_auth_options => {:auth => 'username:password'})
       Twitter::JSONStream.should_receive(:connect).with(hash_including(:auth => "username:password"))
       consumer.connect([1,2])
     end

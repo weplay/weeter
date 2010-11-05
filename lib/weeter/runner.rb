@@ -29,7 +29,7 @@ module Weeter
 
     def tweet_consumer
       @tweet_consumer ||= Weeter::TweetConsumer.new(
-        :authentication_options => authentication_options,
+        :twitter_auth_options => authentication_options,
         :publish_url => @config.publish_url,
         :delete_url => @config.delete_url
       )

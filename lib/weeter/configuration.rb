@@ -5,7 +5,7 @@ module Weeter
   class Configuration
     include Singleton
 
-    attr_accessor :publish_url, :delete_url, :subscriptions_url, :listening_port, :twitter_basic_auth, :twitter_oauth, :log_path
+    attr_accessor :publish_url, :delete_url, :subscriptions_url, :listening_port, :twitter_basic_auth, :twitter_oauth, :log_path, :oauth
 
     def listening_port
       @listening_port || 7337

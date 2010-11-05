@@ -56,7 +56,7 @@ describe Weeter::Runner do
         Weeter::Configuration.instance.twitter_oauth = oauth_params
         runner = Weeter::Runner.new(Weeter::Configuration.instance)
 
-        Weeter::TweetConsumer.should_receive(:new).with(hash_including(:authentication_options => {:oauth => oauth_params})).and_return(@consumer)
+        Weeter::TweetConsumer.should_receive(:new).with(hash_including(:twitter_auth_options => {:oauth => oauth_params})).and_return(@consumer)
 
         runner.start
       end
@@ -69,7 +69,7 @@ describe Weeter::Runner do
         Weeter::Configuration.instance.twitter_basic_auth = {:username => 'foo', :password => 'bar'}
         runner = Weeter::Runner.new(Weeter::Configuration.instance)
 
-        Weeter::TweetConsumer.should_receive(:new).with(hash_including(:authentication_options => {:oauth => oauth_params})).and_return(@consumer)
+        Weeter::TweetConsumer.should_receive(:new).with(hash_including(:twitter_auth_options => {:oauth => oauth_params})).and_return(@consumer)
         runner.start
       end
 
@@ -80,7 +80,7 @@ describe Weeter::Runner do
         Weeter::Configuration.instance.twitter_basic_auth = {:username => 'foo', :password => 'bar'}
         runner = Weeter::Runner.new(Weeter::Configuration.instance)
 
-        Weeter::TweetConsumer.should_receive(:new).with(hash_including(:authentication_options => {:auth => 'foo:bar'})).and_return(@consumer)
+        Weeter::TweetConsumer.should_receive(:new).with(hash_including(:twitter_auth_options => {:auth => 'foo:bar'})).and_return(@consumer)
 
         runner.start
       end

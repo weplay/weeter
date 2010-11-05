@@ -7,11 +7,11 @@ module Weeter
     def initialize(options = {})
       @publish_url = options[:publish_url]
       @delete_url = options[:delete_url]
-      @authentication_options = options[:authentication_options]
+      @twitter_auth_options = options[:twitter_auth_options]
     end
 
     def connect(ids)
-      connect_options = {:params => {:follow => ids}, :method => 'POST'}.merge(@authentication_options)
+      connect_options = {:params => {:follow => ids}, :method => 'POST'}.merge(@twitter_auth_options)
       @stream = Twitter::JSONStream.connect(connect_options)
 
       @stream.each_item do |item|
