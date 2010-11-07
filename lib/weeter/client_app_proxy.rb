@@ -38,10 +38,10 @@ module Weeter
   protected
 
     def http_request(method, url, params = {})
-      if method == :get
-        request_options = {:query => params}
-      else
+      if method == :post
         request_options = {:body => params}
+      else
+        request_options = {:query => params}
       end
       request_options.merge!(:head => {"Authorization" => oauth_header(url, params, method.to_s.upcase)}) if @config.oauth
       EM::HttpRequest.new(url).send(method, request_options)
