@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/maccman/roauth.git
+  revision: 0cac7427c3d3ad6110c56bc154f290e6bc109312
+  ref: 0cac7427c3d3ad6110c56bc154f290e6bc109312
+  specs:
+    roauth (0.0.6)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -13,7 +20,6 @@ GEM
     json (1.4.6)
     linecache (0.43)
     rake (0.8.7)
-    roauth (0.0.3)
     rspec (2.0.1)
       rspec-core (~> 2.0.1)
       rspec-expectations (~> 2.0.1)
@@ -43,6 +49,7 @@ DEPENDENCIES
   eventmachine_httpserver
   json
   rake
+  roauth!
   rspec
   ruby-debug
   twitter-stream
