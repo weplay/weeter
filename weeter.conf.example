@@ -3,18 +3,28 @@
 #
 
 Weeter.configure do |conf|
-  # For basic auth
-  # conf.basic_auth = {:username => 'david', :password => 'secr3tp2ssw0rd'}
 
-  # Or, for oauth
-  # conf.oauth = {:consumer_key => 'consumerkey',
-  #              :consumer_secret => 'consumersecret',
-  #              :access_key => 'accesskey',
-  #              :access_secret => 'access_secret'}
+  conf.twitter do |twitter|
+    # For basic auth
+    # twitter.basic_auth = {:username => 'johnny', :password => 'secret'}
+    
+    # Or, for oauth
+    # conf.twitter_oauth = {:consumer_key => 'consumerkey',
+    #                       :consumer_secret => 'consumersecret',
+    #                       :access_key => 'accesskey',
+    #                       :access_secret => 'access_secret'}
+  end
 
-  conf.subscriptions_url = 'http://www.mysite.com/twitter_subscriptions.json'
-  conf.publish_url       = 'http://www.mysite.com/tweets/create'
-  conf.delete_url        = 'http://www.mysite.com/tweets/destroy'
-  conf.listening_port    = 8080
-  conf.log_path          = '/tmp/weeter.log'
+  conf.client_app do |client_app|
+    client_app.oauth = {:consumer_key => 'key',
+                        :consumer_secret => 'secret',
+                        :access_key => 'accesskey',
+                        :access_secret => 'accesssecret'}
+    client_app.subscriptions_url = 'http://www.site.com/subs'
+    client_app.delete_url = "http://www.site.com/tweets/destroy"
+    client_app.publish_url = 'http://www.site.com/tweets/create'
+  end
+
+  # conf.log_path = ''
+  # conf.listening_port = 7337
 end
